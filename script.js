@@ -6,9 +6,18 @@ const imgStore = [
     "Furniture 4.png"
 ]
 
+//Array with colors for bg
+const bgColors = [
+    'blue',
+    'red',
+    'green',
+    'yellow'
+]
+
 //Elements from HTML
 const sliderElement = document.querySelector('.furniture_img')
 const blocks = document.querySelectorAll('.block')
+const backgroundElement = document.querySelector('.container')
 
 const sliderButtons = {
     first: document.querySelector('#oneBtn'),
@@ -25,6 +34,7 @@ let imgNow = 0
 //Function which prints image
 const printImg = () => {
     sliderElement.src = `./img/${imgStore[imgNow]}`
+    backgroundElement.style.backgroundColor = `${bgColors[imgNow]}`
 }
 
 printImg()
@@ -82,6 +92,28 @@ const sliderButton = (element) => {
         }, 500)
     }
 }
+
+const changeImage = (nextImgIndex) => {
+    sliderElement.classList.add('fade-out')
+    sliderElement.classList.remove('fade-in')
+
+    setTimeout(() => {
+        imgNow = nextImgIndex
+        printImg()
+        sliderElement.classList.remove('fade-out')
+        sliderElement.classList.add('fade-in')
+        updateActiveButton(nextImgIndex)
+    }, 500)
+}
+
+//Print next image after some time
+const nextImageAnimation = () => {
+    const nextImgIndex = (imgNow + 1) % imgStore.length
+
+    changeImage(nextImgIndex)
+}
+
+setInterval(nextImageAnimation, 10000)
 
 blocks.forEach((block) => {
     block.addEventListener('click', () => sliderBlock(block))
