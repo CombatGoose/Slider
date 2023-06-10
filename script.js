@@ -29,6 +29,18 @@ const printImg = () => {
 
 printImg()
 
+//Update active button
+const updateActiveButton = (nextImgIndex) => {
+    buttons.forEach((button) => {
+        const buttonIndex = parseInt(button.getAttribute('sliderNum'))
+        if (buttonIndex === nextImgIndex) {
+            button.classList.add('active')
+        } else {
+            button.classList.remove('active')
+        }
+    })
+}
+
 //Animation
 const animation = (newActive) => {
     buttons.forEach((button) => {
@@ -50,10 +62,10 @@ const sliderBlock = (element) => {
             printImg()
             sliderElement.classList.remove('fade-out')
             sliderElement.classList.add('fade-in')
+            updateActiveButton(nextImgIndex)
         }, 500)
     }
 }
-
 //Change image onclick "button"
 const sliderButton = (element) => {
     const nextImgIndex = parseInt(element.getAttribute('sliderNum'))
